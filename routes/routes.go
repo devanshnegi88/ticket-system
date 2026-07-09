@@ -24,24 +24,16 @@ func Setup(
 	ticketHandler *handlers.TicketHandler,
 	jwtManager *auth.JWTManager,
 ) *gin.Engine {
-	router.Static("/css", "/web/css")
-router.Static("/js", "/web/js")
-router.StaticFile("/", "/web/index.html")
 
-router.GET("/health", handlers.HealthCheck)
+	router := gin.Default()
 
+	// Serve UI
+	router.Static("/css", "./web/css")
+	router.Static("/js", "./web/js")
+	router.StaticFile("/", "./web/index.html")
 
-
-
-	// Serve the built-in HTML/CSS/JS UI. Static assets live under
-	// ./web/css and ./web/js, and the SPA entry point is ./web/index.html,
-	// served at "/" so the UI and API share an origin (no CORS needed).
-	// router.Static("/css", "./web/css")
-	// router.Static("/js", "./web/js")
-	// router.StaticFile("/", "./web/index.html")
-
-	// router.GET("/health", handlers.HealthCheck)
-
+	// Health endpoint
+	router.GET("/health", handlers.HealthCheck)
 
 	authGroup := router.Group("/auth")
 	{
