@@ -26,7 +26,11 @@ func Setup(
 	router := gin.Default()
 
 	router.GET("/health", handlers.HealthCheck)
-
+router.GET("/", func(c *gin.Context) {
+    c.JSON(200, gin.H{
+        "message": "Ticket System API is running",
+    })
+})
 	authGroup := router.Group("/auth")
 	{
 		authGroup.POST("/register", authHandler.Register)
