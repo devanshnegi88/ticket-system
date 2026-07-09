@@ -3,14 +3,11 @@ FROM golang:1.22-bookworm AS builder
 
 WORKDIR /app
 
-# Copy everything first
 COPY . .
 
-# Generate go.sum and download dependencies
 RUN go mod tidy
 RUN go mod download
 
-# Build
 RUN CGO_ENABLED=1 GOOS=linux go build -o /app/ticket-system ./cmd/server
 
 # ---- Final stage ----
@@ -23,7 +20,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
+# Copy binary
 COPY --from=builder /app/ticket-system .
+
+# Copy frontend
+COPY --from=builder /app/web ./web
 
 EXPOSE 8080
 
