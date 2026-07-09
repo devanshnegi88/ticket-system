@@ -28,9 +28,9 @@ func Setup(
 	ticketHandler *handlers.TicketHandler,
 	jwtManager *auth.JWTManager,
 ) *gin.Engine {
-	router.Static("/css", "./web/css")
-router.Static("/js", "./web/js")
-router.StaticFile("/", "./web/index.html")
+	router.Static("/css", "/web/css")
+router.Static("/js", "/web/js")
+router.StaticFile("/", "/web/index.html")
 
 router.GET("/health", handlers.HealthCheck)
 
