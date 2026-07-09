@@ -3,13 +3,14 @@ FROM golang:1.22-bookworm AS builder
 
 WORKDIR /app
 
-# Cache dependency downloads separately from source changes.
-COPY go.mod go.sum ./
-RUN go mod download
-
+# Copy everything first
 COPY . .
 
-# CGO is required by the mattn/go-sqlite3 driver used under gorm.io/driver/sqlite.
+# Generate go.sum and download dependencies
+RUN go mod tidy
+RUN go mod download
+
+# Build
 RUN CGO_ENABLED=1 GOOS=linux go build -o /app/ticket-system ./cmd/server
 
 # ---- Final stage ----
