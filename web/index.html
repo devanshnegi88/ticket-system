@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ticket System</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ===== AUTH VIEW ===== -->
+  <div id="auth-view" class="auth-wrap">
+    <div class="auth-card">
+      <div class="brand">
+        <span class="brand-mark">◆</span>
+        <span class="brand-name">Ticket System</span>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Log In</button>
+        <button class="tab-btn" data-tab="register">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label>Email
+          <input type="email" id="login-email" required autocomplete="email" placeholder="you@example.com" />
+        </label>
+        <label>Password
+          <input type="password" id="login-password" required autocomplete="current-password" placeholder="••••••••" />
+        </label>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+        <p class="form-error" id="login-error"></p>
+      </form>
+
+      <form id="register-form" class="auth-form hidden">
+        <label>Email
+          <input type="email" id="register-email" required autocomplete="email" placeholder="you@example.com" />
+        </label>
+        <label>Password
+          <input type="password" id="register-password" required minlength="6" autocomplete="new-password" placeholder="At least 6 characters" />
+        </label>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        <p class="form-error" id="register-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== APP VIEW ===== -->
+  <div id="app-view" class="app-wrap hidden">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">◆</span>
+        <span class="brand-name">Ticket System</span>
+      </div>
+      <div class="topbar-right">
+        <span id="user-email" class="user-email"></span>
+        <button id="logout-btn" class="btn btn-ghost">Log Out</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="main-header">
+        <div>
+          <h1>Your Tickets</h1>
+          <p class="subtitle" id="ticket-count">0 tickets</p>
+        </div>
+        <button id="new-ticket-btn" class="btn btn-primary">+ New Ticket</button>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-chip active" data-status="all">All</button>
+        <button class="filter-chip" data-status="open">Open</button>
+        <button class="filter-chip" data-status="in_progress">In Progress</button>
+        <button class="filter-chip" data-status="closed">Closed</button>
+      </div>
+
+      <p id="list-error" class="form-error"></p>
+
+      <div id="ticket-list" class="ticket-list"></div>
+      <div id="empty-state" class="empty-state hidden">
+        <p>No tickets here yet.</p>
+        <button class="btn btn-primary" id="empty-new-btn">Create your first ticket</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== NEW TICKET MODAL ===== -->
+  <div id="new-ticket-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>New Ticket</h2>
+        <button class="modal-close" data-close="new-ticket-modal">&times;</button>
+      </div>
+      <form id="new-ticket-form">
+        <label>Title
+          <input type="text" id="new-ticket-title" required placeholder="Brief summary of the issue" />
+        </label>
+        <label>Description
+          <textarea id="new-ticket-desc" rows="4" placeholder="More details (optional)"></textarea>
+        </label>
+        <p class="form-error" id="new-ticket-error"></p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" data-close="new-ticket-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Ticket</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== TICKET DETAIL MODAL ===== -->
+  <div id="detail-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="detail-title">Ticket</h2>
+        <button class="modal-close" data-close="detail-modal">&times;</button>
+      </div>
+      <div class="detail-body">
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span id="detail-status" class="status-badge">open</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Ticket ID</span>
+          <span id="detail-id">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Created</span>
+          <span id="detail-created">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Updated</span>
+          <span id="detail-updated">—</span>
+        </div>
+        <div class="detail-desc">
+          <span class="detail-label">Description</span>
+          <p id="detail-description">—</p>
+        </div>
+        <p class="form-error" id="detail-error"></p>
+        <div class="status-actions">
+          <span class="detail-label">Change status</span>
+          <div class="status-btn-row">
+            <button class="btn status-set-btn" data-status="open">Open</button>
+            <button class="btn status-set-btn" data-status="in_progress">In Progress</button>
+            <button class="btn status-set-btn" data-status="closed">Closed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

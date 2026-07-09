@@ -11,6 +11,11 @@ import (
 // Setup builds the gin.Engine with all routes registered, matching the
 // endpoint contract required by the assignment exactly:
 //
+<<<<<<< HEAD
+=======
+//	GET    /              (HTML/CSS/JS UI)
+//	GET    /css/*, /js/*  (static assets for the UI)
+>>>>>>> 6d83ca9 (ticket system)
 //	GET    /health
 //	POST   /auth/register
 //	POST   /auth/login
@@ -23,14 +28,25 @@ func Setup(
 	ticketHandler *handlers.TicketHandler,
 	jwtManager *auth.JWTManager,
 ) *gin.Engine {
-	router := gin.Default()
+	router.Static("/css", "./web/css")
+router.Static("/js", "./web/js")
+router.StaticFile("/", "./web/index.html")
 
-	router.GET("/health", handlers.HealthCheck)
-router.GET("/", func(c *gin.Context) {
-    c.JSON(200, gin.H{
-        "message": "Ticket System API is running",
-    })
-})
+router.GET("/health", handlers.HealthCheck)
+
+
+
+
+	// Serve the built-in HTML/CSS/JS UI. Static assets live under
+	// ./web/css and ./web/js, and the SPA entry point is ./web/index.html,
+	// served at "/" so the UI and API share an origin (no CORS needed).
+	// router.Static("/css", "./web/css")
+	// router.Static("/js", "./web/js")
+	// router.StaticFile("/", "./web/index.html")
+
+	// router.GET("/health", handlers.HealthCheck)
+
+
 	authGroup := router.Group("/auth")
 	{
 		authGroup.POST("/register", authHandler.Register)
