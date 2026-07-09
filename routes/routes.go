@@ -11,11 +11,7 @@ import (
 // Setup builds the gin.Engine with all routes registered, matching the
 // endpoint contract required by the assignment exactly:
 //
-<<<<<<< HEAD
-=======
-//	GET    /              (HTML/CSS/JS UI)
-//	GET    /css/*, /js/*  (static assets for the UI)
->>>>>>> 6d83ca9 (ticket system)
+
 //	GET    /health
 //	POST   /auth/register
 //	POST   /auth/login
